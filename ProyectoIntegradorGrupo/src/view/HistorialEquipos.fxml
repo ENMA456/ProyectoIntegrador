@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="20.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReservasEquiposController">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <Label styleClass="header-label" text=" Historial de Reservas de Equipos" />
+
+    <!-- Tabla para mostrar historial de reservas -->
+    <TableView fx:id="tablaHistorialReservas" prefHeight="400.0" prefWidth="750.0" VBox.vgrow="ALWAYS">
+
+        <columns>
+            <TableColumn fx:id="colEquipo" text="Equipo" />
+            <TableColumn fx:id="colUsuario" text="Usuario" />
+        
+            <TableColumn fx:id="colInicio" text="Fecha Inicio" />
+            <TableColumn fx:id="colFin" text="Fecha Fin" />
+            <TableColumn fx:id="colEstado" text="Estado" />
+        </columns>
+    </TableView>
+
+    <!-- HBox para los filtros de fecha -->
+    <HBox alignment="CENTER" spacing="10.0">
+        <Label text="Desde:" />
+        <DatePicker fx:id="datePickerDesde" />
+        <Label text="Hasta:" />
+        <DatePicker fx:id="datePickerHasta" />
+        <Button fx:id="btnFiltrar" onAction="#filtrarPorFecha" styleClass="button" text="Filtrar por Fecha" />
+        <Button fx:id="btnMostrarTodo" onAction="#mostrarTodo" styleClass="button" text="Mostrar Todo" />
+    </HBox>
+
+    <!-- Botón Volver al Menú -->
+    <Button fx:id="btnVolver" onAction="#volverAlMenu" styleClass="button button-blue" text="🔙 Volver al Menú" />
+</VBox>

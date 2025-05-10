@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminMenuController">
+
+    <center>
+        <StackPane fx:id="adminContentPane" style="-fx-background-color: #E3F2FD;">
+            <Label style="-fx-font-size: 24; -fx-text-fill: #000000;" text="ＭＥＮＵ ＤＥ ＡＤＭＩＮＩＳＴＲＡＤＯＲ">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="27.0" />
+            </font></Label>
+         <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <left>
+               <AnchorPane prefHeight="490.0" prefWidth="222.0" style="-fx-background-size: WHITE;" BorderPane.alignment="CENTER" />
+            </left>
+            <bottom>
+               <ImageView fitHeight="46.0" fitWidth="284.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                  <image>
+                     <Image url="@../../../../../../../OneDrive/Imágenes/Capturas%20de%20pantalla/Captura%20de%20pantalla%202025-05-09%20234351.png" />
+                  </image>
+               </ImageView>
+            </bottom>
+         </BorderPane>
+        </StackPane>
+    </center>
+   <top>
+        <VBox alignment="TOP_CENTER" prefHeight="490.0" prefWidth="346.0" spacing="20" style="-fx-background-color: #000000;" stylesheets="@Style.css" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="30" />
+            </padding>
+
+            <Label prefHeight="30.0" prefWidth="277.0" style="-fx-text-fill: white; -fx-font-size: 17;" text="Selecciona La Opcion Que Necesites" />
+
+            <Button fx:id="btnGestionarSalas" onAction="#gestionarSalas" prefHeight="32.0" prefWidth="300.0" styleClass="sidebar-button" text="GESTIONAR SALAS" />
+            <Button fx:id="btnGestionarEquipos" onAction="#gestionarEquipos" prefHeight="32.0" prefWidth="300.0" styleClass="sidebar-button" text="GESTIONAR EQUIPOS" />
+            <Button fx:id="btnControlMantenimiento" onAction="#controlMantenimiento" prefHeight="32.0" prefWidth="300.0" styleClass="sidebar-button" text="CONTROL MANTENIMIENTO" />
+            <Button fx:id="btnDevolucion" onAction="#controlDevolucion" prefHeight="32.0" prefWidth="300.0" styleClass="sidebar-button" text="DEVOLUCIONES" />
+            <Button fx:id="btnGenerarSancion" onAction="#generarSancion" prefHeight="32.0" prefWidth="300.0" styleClass="sidebar-button" text="GENERAR SANCIÓN" />
+            <Button fx:id="btnCerrarSesion" onAction="#cerrarSesion" prefHeight="32.0" prefWidth="300.0" styleClass="sidebar-button" text="CERRAR SESIÓN" />
+        </VBox>
+   </top>
+
+</BorderPane>
