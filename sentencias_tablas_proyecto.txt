@@ -1,0 +1,117 @@
+
+CREATE TABLE tipoEquipo (
+    id          NUMBER(8) PRIMARY KEY,
+    tipo        VARCHAR2(50) NOT NULL,
+    descripcion VARCHAR2(255) NOT NULL
+);
+
+CREATE TABLE tipoSala (
+    id          NUMBER(8) PRIMARY KEY,
+    tipo        VARCHAR2(50) NOT NULL,
+    descripcion VARCHAR2(255) NOT NULL
+);
+
+CREATE TABLE tipoUsuario (
+    id          NUMBER(8) PRIMARY KEY,
+    tipo        VARCHAR2(50) NOT NULL,
+    descripcion VARCHAR2(255) NOT NULL
+);
+
+CREATE TABLE equipo (
+    id            NUMBER(8) PRIMARY KEY,
+    nombre        VARCHAR2(100) NOT NULL,
+    descripcion   VARCHAR2(255) NOT NULL,
+    idTipoEquipo  NUMBER(8) NOT NULL,
+    FOREIGN KEY (idTipoEquipo) REFERENCES tipoEquipo(id)
+);
+
+CREATE TABLE sala (
+    id           NUMBER(8) PRIMARY KEY,
+    nombre       VARCHAR2(100) NOT NULL,
+    capacidad    NUMBER(3) NOT NULL,
+    descripcion  VARCHAR2(255) NOT NULL,
+    idTipoSala   NUMBER(8) NOT NULL,
+    FOREIGN KEY (idTipoSala) REFERENCES tipoSala(id)
+);
+
+CREATE TABLE usuario (
+    id              NUMBER(8) PRIMARY KEY,
+    nombre          VARCHAR2(100) NOT NULL,
+    apellido        VARCHAR2(100) NOT NULL,
+    correo          VARCHAR2(100) NOT NULL,
+    clave           VARCHAR2(20) NOT NULL,
+    identificacion  VARCHAR2(20) NOT NULL,
+    idTipoUsuario   NUMBER(8) NOT NULL,
+    FOREIGN KEY (idTipoUsuario) REFERENCES tipoUsuario(id)
+);
+
+CREATE TABLE solicitudPrestamo (
+    id                   NUMBER(8) PRIMARY KEY,
+    fechaSolicitud       DATE NOT NULL,
+    fechaHoraInicio      DATE NOT NULL,
+    fechaHoraFin         DATE NOT NULL,
+    descripcionSolicitud VARCHAR2(255) NOT NULL,
+    estado               NUMBER(1) NOT NULL,
+    descripcionEstado    VARCHAR2(255),
+    idUsuario            NUMBER(8) NOT NULL,
+    FOREIGN KEY (idUsuario) REFERENCES usuario(id)
+);
+
+CREATE TABLE equipoSolicitudPrestamo (
+    id                  NUMBER(8) PRIMARY KEY,
+    idEquipo            NUMBER(8) NOT NULL,
+    idSolicitudPrestamo NUMBER(8) NOT NULL,
+    FOREIGN KEY (idEquipo) REFERENCES equipo(id),
+    FOREIGN KEY (idSolicitudPrestamo) REFERENCES solicitudPrestamo(id)
+);
+
+CREATE TABLE salaSolicitudPrestamo (
+    id                  NUMBER(8) PRIMARY KEY,
+    idSala              NUMBER(8) NOT NULL,
+    idSolicitudPrestamo NUMBER(8) NOT NULL,
+    FOREIGN KEY (idSala) REFERENCES sala(id),
+    FOREIGN KEY (idSolicitudPrestamo) REFERENCES solicitudPrestamo(id)
+);
+
+CREATE TABLE encuestaSatisfaccion (
+    id                  NUMBER(8) PRIMARY KEY,
+    nivelSatisfaccion   NUMBER(2) CHECK (nivelSatisfaccion BETWEEN 1 AND 10) NOT NULL,
+    comentario          VARCHAR2(255),
+    idSolicitudPrestamo NUMBER(8) NOT NULL,
+    FOREIGN KEY (idSolicitudPrestamo) REFERENCES solicitudPrestamo(id)
+);
+
+CREATE TABLE acuerdoResponsabilidad (
+    id                  NUMBER(8) PRIMARY KEY,
+    fechaAcuerdo        DATE NOT NULL,
+    firmado             BOOLEAN NOT NULL,
+    idSolicitudPrestamo NUMBER(8) NOT NULL,
+    FOREIGN KEY (idSolicitudPrestamo) REFERENCES solicitudPrestamo(id)
+);
+
+create role solicitante;
+GRANT select, insert, update ON solicitudPrestamo TO solicitante;
+GRANT select, insert ON encuestaSatisfaccion TO solicitante;
+GRANT select, insert, update ON acuerdoResponsabilidad TO solicitante;
+GRANT select ON sala TO solicitante;
+GRANT select ON equipo TO solicitante;
+
+create role administrador;
+GRANT select, insert, update, delete ON tipoEquipo TO administrador;
+GRANT select, insert, update, delete ON tipoSala TO administrador; 
+GRANT select, insert, update, delete ON tipoUsuario TO administrador; 
+GRANT select, insert, update, delete ON equipo TO administrador; 
+GRANT select, insert, update, delete ON sala TO administrador; 
+GRANT select, insert, update, delete ON usuario TO administrador; 
+GRANT select, insert, update, delete ON solicitudPrestamo TO administrador; 
+GRANT select, insert, update, delete ON equipoSolicitudPrestamo TO administrador; 
+GRANT select, insert, update, delete ON salaSolicitudPrestamo TO administrador; 
+GRANT select, insert, update, delete ON encuestaSatisfaccion TO administrador; 
+GRANT select, insert, update, delete ON acuerdoResponsabilidad TO administrador; 
+
+CREATE USER estudiante1 IDENTIFIED BY estudiante1;
+GRANT solicitante TO estudiante1;
+CREATE USER profesor1 IDENTIFIED BY profesor1;
+GRANT solicitante TO profesor1;
+CREATE USER admin1 IDENTIFIED BY admin1;
+GRANT administrador TO admin1;
